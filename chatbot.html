@@ -18,10 +18,40 @@
     <div class="container"></div>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
+      const ChatInput = () => {
+        return (
+          <>
+            <input type="text" placeholder="Enter the text" />
+            <button>Send</button>
+          </>
+        );
+      };
+
+      const ChatMessage = ({ message, sender }) => {
+        return (
+          <div>
+            {sender === "user" && (
+              <>
+                {message}
+                <img height="20" width="20" src="user.png" />
+              </>
+            )}
+            {sender === "bot" && (
+              <>
+                <img height="20" width="20" src="chatbot.png" />
+                {message}
+              </>
+            )}
+          </div>
+        );
+      };
+
       const App = () => {
         return (
           <div>
-            <h1>Hello</h1>
+            <ChatInput />
+            <ChatMessage message={"Hello Chat"} sender="user" />
+            <ChatMessage message={"Hello User"} sender="bot" />
           </div>
         );
       };
