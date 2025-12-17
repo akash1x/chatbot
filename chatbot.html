@@ -18,11 +18,35 @@
     <div class="container"></div>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
-      const ChatInput = () => {
+      const ChatInput = ({ chatMessages, setChatMessages }) => {
+        const [message, setMessage] = React.useState("");
+        const handleMessageChange = (e) => {
+          setMessage(e.target.value);
+        };
+
+        const sendMessage = () => {
+          const userMessage = [
+            ...chatMessages,
+            { message: message, sender: "user" },
+          ];
+          setChatMessages(userMessage);
+          setMessage("");
+
+          //Reply from bot
+          setChatMessages([
+            ...userMessage,
+            { message: crypto.randomUUID(), sender: "bot" },
+          ]);
+        };
         return (
           <>
-            <input type="text" placeholder="Enter the text" />
-            <button>Send</button>
+            <input
+              type="text"
+              placeholder="Enter the text"
+              onChange={handleMessageChange}
+              value={message}
+            />
+            <button onClick={sendMessage}>Send</button>
           </>
         );
       };
@@ -46,12 +70,34 @@
         );
       };
 
-      const App = () => {
+      const ChatMessages = ({ chatMessages }) => {
         return (
           <div>
-            <ChatInput />
-            <ChatMessage message={"Hello Chat"} sender="user" />
-            <ChatMessage message={"Hello User"} sender="bot" />
+            {chatMessages.map((message, index) => (
+              <ChatMessage
+                key={index}
+                message={message.message}
+                sender={message.sender}
+              />
+            ))}
+          </div>
+        );
+      };
+
+      const App = () => {
+        const [chatMessages, setChatMessages] = React.useState([
+          { message: "Hi there!", sender: "user" },
+          { message: "Hello! How can I help you today?", sender: "bot" },
+          { message: "I have a question about your services.", sender: "user" },
+          { message: "Certainly, please ask away!", sender: "bot" },
+        ]);
+        return (
+          <div>
+            <ChatInput
+              setChatMessages={setChatMessages}
+              chatMessages={chatMessages}
+            />
+            <ChatMessages chatMessages={chatMessages} />
           </div>
         );
       };
