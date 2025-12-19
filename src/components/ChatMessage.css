@@ -1,0 +1,29 @@
+.user-message {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.bot-message {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.user-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.bot-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
